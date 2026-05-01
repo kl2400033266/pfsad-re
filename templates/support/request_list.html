@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="card">
+    <h2 class="title">Help Requests</h2>
+    <p class="subtitle">Track case status, review urgency, and take role-specific actions efficiently.</p>
+
+    <ul class="list">
+        {% for req in requests %}
+            <li class="list-item">
+                <div class="list-head">
+                    <strong>{{ req.title }}</strong>
+                    <span class="badge {% if req.status|lower == 'open' %}badge-open{% elif req.status|lower == 'pending' %}badge-pending{% elif req.status|lower == 'assigned' %}badge-open{% else %}badge-default{% endif %}">
+                        {{ req.status }}
+                    </span>
+                </div>
+                <div class="spacer-sm"></div>
+                <p class="muted"><strong>Category:</strong> {{ req.get_category_display }} · <strong>Urgency:</strong> {{ req.get_urgency_level_display }}</p>
+                <p class="muted"><strong>Created:</strong> {{ req.created_at|date:'d M Y, H:i' }}</p>
+                {% if request.user.role == 'admin' or request.user.is_superuser or request.user.is_staff %}
+                    <p class="muted"><strong>Survivor:</strong> {{ req.survivor.username }}</p>
+                {% endif %}
+                <div class="inline-actions">
+                    {% if request.user.role == 'admin' or request.user.is_superuser or request.user.is_staff %}
+                        <a href="{% url 'assign_case' req.pk %}" class="btn btn-secondary">Assign</a>
+                    {% endif %}
+
+                    {% if request.user.role != 'admin' %}
+                        <a href="{% url 'case_chat' req.pk %}" class="btn btn-secondary">Open Chat</a>
+                    {% endif %}
+
+                    {% if request.user.role == 'counsellor' or request.user.role == 'legal_advisor' %}
+                        {% if req.status != 'closed' %}
+                            <form method="post" action="{% url 'close_case' req.pk %}" class="inline-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn">Close Case</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </li>
+        {% empty %}
+            <li class="list-item empty-state">No requests available.</li>
+        {% endfor %}
+    </ul>
+
+    <div class="actions">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back</a>
+    </div>
+</section>
+{% endblock %}
+

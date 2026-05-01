@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="card">
+    <h2 class="title">Create Help Request</h2>
+    <p class="subtitle">Share your situation clearly so support professionals can respond quickly and safely.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="actions">
+            <button type="submit">Submit Request</button>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

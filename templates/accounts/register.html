@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="card">
+    <h2 class="title">Register as Survivor</h2>
+    <p class="subtitle">Create your account to request help and securely communicate with the support team.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="actions">
+            <button type="submit">Register</button>
+            <a href="{% url 'login' %}" class="btn btn-secondary">Already have an account?</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

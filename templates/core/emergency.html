@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="card">
+    <h2 class="title">Emergency Support</h2>
+    <p class="subtitle">If there is immediate danger, contact local emergency services first. The following channels can support urgent relocation and crisis response planning.</p>
+
+    <ul class="list">
+        {% if emergency_resources %}
+            {% for item in emergency_resources %}
+                <li class="list-item">
+                    <strong>{{ item.title }}</strong>
+                    <div class="spacer-sm"></div>
+                    <p class="muted">{{ item.content }}</p>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li class="list-item">
+                <strong>Emergency Hotline</strong>
+                <div class="spacer-sm"></div>
+                <p class="muted">Dial local emergency number immediately if you are in danger.</p>
+            </li>
+            <li class="list-item">
+                <strong>Emergency Shelter Intake</strong>
+                <div class="spacer-sm"></div>
+                <p class="muted">Reach out to nearest verified shelter for urgent accommodation and support transfer.</p>
+            </li>
+        {% endif %}
+    </ul>
+</section>
+{% endblock %}

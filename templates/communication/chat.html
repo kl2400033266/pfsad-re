@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="card">
+    <h2 class="title">Case Chat</h2>
+    <p class="subtitle">{{ help_request.title }}</p>
+
+    <div class="chat-box">
+        {% for msg in messages %}
+            <div class="chat-bubble">
+                <span class="chat-author">{{ msg.sender.username }}:</span>
+                <span>{{ msg.get_decoded_message }}</span>
+            </div>
+        {% empty %}
+            <p class="empty-state">No messages yet.</p>
+        {% endfor %}
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="content" required placeholder="Type your message..."></textarea>
+        <div class="actions">
+            <button type="submit">Send</button>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

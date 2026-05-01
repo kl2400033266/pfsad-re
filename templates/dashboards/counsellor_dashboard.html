@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="card">
+	<h2 class="title">Counsellor Dashboard</h2>
+	<p class="subtitle">Welcome, {{ request.user.username }}. Manage assigned support cases, communicate with survivors, and close completed cases.</p>
+
+	<div class="stats-grid">
+		<article class="stat-card">
+			<h3>Assigned Cases</h3>
+			<p>{{ assigned_total }}</p>
+		</article>
+		<article class="stat-card">
+			<h3>Active Cases</h3>
+			<p>{{ assigned_open }}</p>
+		</article>
+		<article class="stat-card">
+			<h3>Closed Cases</h3>
+			<p>{{ assigned_closed }}</p>
+		</article>
+	</div>
+
+	<div class="actions">
+		<a href="{% url 'assigned_cases' %}" class="btn">View Assigned Cases</a>
+		<a href="{% url 'resource_list' %}" class="btn btn-secondary">Reference Resources</a>
+	</div>
+
+	<section class="card" style="margin-top: 1.5rem;">
+		<h3 class="section-title">Assigned Survivor Queries</h3>
+		<ul class="list">
+			{% for req in assigned_cases %}
+				<li class="list-item">
+					<strong>{{ req.title }}</strong>
+					<div class="spacer-sm"></div>
+					<p class="muted"><strong>Survivor:</strong> {{ req.survivor.username }} · <strong>Status:</strong> {{ req.status }} · <strong>Urgency:</strong> {{ req.get_urgency_level_display }}</p>
+					<p class="muted">{{ req.description|truncatechars:140 }}</p>
+					<div class="inline-actions">
+						<a href="{% url 'case_chat' req.pk %}" class="btn btn-secondary">Open Chat</a>
+						<a href="{% url 'assigned_cases' %}" class="btn">Open Cases</a>
+					</div>
+				</li>
+			{% empty %}
+				<li class="list-item empty-state">No assigned survivor queries yet.</li>
+			{% endfor %}
+		</ul>
+	</section>
+</section>
+{% endblock %}

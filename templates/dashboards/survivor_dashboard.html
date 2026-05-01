@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="card">
+	<h2 class="title">Survivor Dashboard</h2>
+	<p class="subtitle">Welcome, {{ request.user.username }}. Submit cases, monitor progress, and access support resources securely.</p>
+
+	<div class="stats-grid">
+		<article class="stat-card">
+			<h3>My Cases</h3>
+			<p>{{ my_total_requests }}</p>
+		</article>
+		<article class="stat-card">
+			<h3>Pending</h3>
+			<p>{{ my_pending_requests }}</p>
+		</article>
+		<article class="stat-card">
+			<h3>Assigned</h3>
+			<p>{{ my_assigned_requests }}</p>
+		</article>
+		<article class="stat-card">
+			<h3>Closed</h3>
+			<p>{{ my_closed_requests }}</p>
+		</article>
+	</div>
+
+	<div class="actions">
+		<a href="{% url 'create_request' %}" class="btn">Create Help Request</a>
+		<a href="{% url 'my_requests' %}" class="btn btn-secondary">View My Requests</a>
+		<a href="{% url 'resource_list' %}" class="btn btn-secondary">View Resources</a>
+	</div>
+</section>
+{% endblock %}

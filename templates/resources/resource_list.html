@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="card">
+    <h2 class="title">Support Resource Library</h2>
+    <p class="subtitle">Explore practical guidance and referral information for legal, counselling, and emergency support needs.</p>
+
+    {% if request.user.is_authenticated %}
+        {% if request.user.role == 'admin' or request.user.is_superuser or request.user.is_staff %}
+        <div class="actions">
+            <a href="{% url 'resource_admin_list' %}" class="btn btn-secondary">Manage Resources</a>
+        </div>
+        {% endif %}
+    {% endif %}
+
+    <div class="stack-block">
+        <h3 class="section-title">Legal Resources</h3>
+        <ul class="list">
+            {% for item in grouped_resources.legal %}
+                <li class="list-item">
+                    <strong>{{ item.title }}</strong>
+                    <p class="muted">{{ item.content }}</p>
+                </li>
+            {% empty %}
+                <li class="list-item empty-state">No legal resources available yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="stack-block">
+        <h3 class="section-title">Counselling Resources</h3>
+        <ul class="list">
+            {% for item in grouped_resources.counselling %}
+                <li class="list-item">
+                    <strong>{{ item.title }}</strong>
+                    <p class="muted">{{ item.content }}</p>
+                </li>
+            {% empty %}
+                <li class="list-item empty-state">No counselling resources available yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="stack-block">
+        <h3 class="section-title">Emergency Contacts</h3>
+        <ul class="list">
+            {% for item in grouped_resources.emergency %}
+                <li class="list-item">
+                    <strong>{{ item.title }}</strong>
+                    <p class="muted">{{ item.content }}</p>
+                </li>
+            {% empty %}
+                <li class="list-item empty-state">No emergency entries available yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+{% endblock %}

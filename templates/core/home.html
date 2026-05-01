@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="card hero-card">
+    <h2 class="title">PS04 - Domestic Violence Support and Legal Aid System</h2>
+    <p class="subtitle">Victims of domestic violence often struggle to access confidential support and accurate legal information. This secure Django-based application provides a safe space to seek help, counseling, and legal guidance.</p>
+    <div class="actions">
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="btn">Go to Dashboard</a>
+        {% else %}
+            <a href="{% url 'register' %}" class="btn">Get Support</a>
+            <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+            <a href="{% url 'demo_credentials' %}" class="btn btn-secondary">Demo Credentials</a>
+        {% endif %}
+    </div>
+</section>
+
+<section class="card">
+    <h3 class="section-title">Problem Description</h3>
+    <p class="muted">The platform prioritizes privacy, data encryption, and controlled access. It connects survivors with professionals while ensuring anonymity and safety.</p>
+</section>
+
+<section class="card">
+    <h3 class="section-title">Core Features</h3>
+    <div class="feature-grid">
+        <article class="feature-card">
+            <h4>Secure help request system</h4>
+            <p>Survivors can submit confidential support requests through a protected workflow.</p>
+        </article>
+        <article class="feature-card">
+            <h4>Counseling and legal resources</h4>
+            <p>Users can access guidance and support materials from professionals and administrators.</p>
+        </article>
+        <article class="feature-card">
+            <h4>Confidential communication</h4>
+            <p>Private interaction keeps communication limited to authorized roles only.</p>
+        </article>
+    </div>
+</section>
+
+<section class="card">
+    <h3 class="section-title">Roles</h3>
+    <p class="muted">Admin, Survivor, Counsellor, Legal Advisor</p>
+</section>
+
+<section class="card">
+    <h3 class="section-title">Description of the Roles</h3>
+    <ul class="list">
+        <li class="list-item"><strong>Admin:</strong> Maintains platform security and content</li>
+        <li class="list-item"><strong>Survivor:</strong> Accesses resources and seeks help</li>
+        <li class="list-item"><strong>Counsellor:</strong> Provides emotional and psychological support</li>
+        <li class="list-item"><strong>Legal Advisor:</strong> Offers legal advice and assistance</li>
+    </ul>
+</section>
+{% endblock %}

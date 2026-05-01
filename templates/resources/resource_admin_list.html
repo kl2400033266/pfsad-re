@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="card">
+    <h2 class="title">Manage Resources</h2>
+    <p class="subtitle">Create and maintain resource entries shown on public and authenticated support pages.</p>
+
+    <form method="get" class="filter-bar">
+        <input type="text" name="q" value="{{ current_query }}" placeholder="Search title or content">
+        <select name="type">
+            <option value="">All Types</option>
+            <option value="legal" {% if current_type == 'legal' %}selected{% endif %}>Legal</option>
+            <option value="counselling" {% if current_type == 'counselling' %}selected{% endif %}>Counselling</option>
+            <option value="emergency" {% if current_type == 'emergency' %}selected{% endif %}>Emergency</option>
+        </select>
+        <button type="submit">Apply</button>
+        <a href="{% url 'resource_admin_list' %}" class="btn btn-secondary">Reset</a>
+    </form>
+
+    <div class="actions">
+        <a href="{% url 'resource_create' %}" class="btn">Create Resource</a>
+        <a href="{% url 'resource_list' %}" class="btn btn-secondary">View Public Resource Library</a>
+    </div>
+
+    <ul class="list">
+        {% for item in resources %}
+            <li class="list-item">
+                <div class="list-head">
+                    <strong>{{ item.title }}</strong>
+                    <span class="badge badge-default">{{ item.get_resource_type_display }}</span>
+                </div>
+                <div class="spacer-sm"></div>
+                <p class="muted">{{ item.content }}</p>
+                <p class="muted"><strong>Created:</strong> {{ item.created_at|date:'d M Y, H:i' }}</p>
+                <div class="inline-actions">
+                    <a href="{% url 'resource_edit' item.pk %}" class="btn btn-secondary">Edit</a>
+                    <a href="{% url 'resource_delete' item.pk %}" class="btn btn-danger">Delete</a>
+                </div>
+            </li>
+        {% empty %}
+            <li class="list-item empty-state">No resources yet. Add the first resource entry.</li>
+        {% endfor %}
+    </ul>
+
+    {% if is_paginated %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a href="{% if query_params %}?{{ query_params }}&page={{ page_obj.previous_page_number }}{% else %}?page={{ page_obj.previous_page_number }}{% endif %}" class="btn btn-secondary">Previous</a>
+            {% endif %}
+
+            <span class="page-indicator">Page {{ page_obj.number }} of {{ paginator.num_pages }}</span>
+
+            {% if page_obj.has_next %}
+                <a href="{% if query_params %}?{{ query_params }}&page={{ page_obj.next_page_number }}{% else %}?page={{ page_obj.next_page_number }}{% endif %}" class="btn btn-secondary">Next</a>
+            {% endif %}
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

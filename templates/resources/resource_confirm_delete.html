@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="card">
+    <h2 class="title">Delete Resource</h2>
+    <p class="subtitle">You are about to delete <strong>{{ object.title }}</strong>. This action cannot be undone.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="actions">
+            <button type="submit" class="btn-danger">Confirm Delete</button>
+            <a href="{% url 'resource_admin_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

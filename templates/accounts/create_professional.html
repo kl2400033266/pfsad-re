@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="card">
+    <h2 class="title">Create Professional Account</h2>
+    <p class="subtitle">Create verified counsellor and legal advisor accounts so new help requests can be assigned immediately.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="actions">
+            <button type="submit">Create User</button>
+            <a href="{% url 'professional_list' %}" class="btn btn-secondary">Back to Team Directory</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

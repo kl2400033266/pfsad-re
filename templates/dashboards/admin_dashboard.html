@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="card">
+    <h2 class="title">Admin Dashboard</h2>
+    <p class="subtitle">Welcome, {{ request.user.username }}. Coordinate requests, staffing, and response flow from one command center.</p>
+
+    <div class="stats-grid">
+        <article class="stat-card">
+            <h3>Total Cases</h3>
+            <p>{{ total_requests }}</p>
+        </article>
+        <article class="stat-card">
+            <h3>Pending</h3>
+            <p>{{ pending_requests }}</p>
+        </article>
+        <article class="stat-card">
+            <h3>Assigned</h3>
+            <p>{{ assigned_requests }}</p>
+        </article>
+        <article class="stat-card">
+            <h3>Closed</h3>
+            <p>{{ closed_requests }}</p>
+        </article>
+    </div>
+
+    <div class="actions">
+        <a href="{% url 'admin_requests' %}" class="btn">View All Help Requests</a>
+        <a href="{% url 'professional_list' %}" class="btn btn-secondary">Manage Professionals</a>
+        <a href="{% url 'create_professional' %}" class="btn btn-secondary">Create Counsellor / Legal Advisor</a>
+        <a href="{% url 'resource_admin_list' %}" class="btn btn-secondary">Update Public Resources</a>
+    </div>
+</section>
+{% endblock %}
